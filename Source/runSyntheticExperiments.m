@@ -6,7 +6,7 @@ trainData = zeros(1000, 2);
 testData = zeros(1,1);
 
 %% Run the threshold based algorithm
-thresholdModel = getThresholdWorkflowModel(trainData);
+thresholdModel = getThresholdWorkflowModel(trainData); 
 
 %Run through all the test data
 
