@@ -21,23 +21,43 @@ thresholdModel = getThresholdWorkflowModel(trainData);
 %Select the best model parameters based on accuracy
 
 %% Run the Sliding window weighted average algorithm
-bestWindowSize = 1;
 
+bestSlidingWindowAccuracy = 0;
+bestWindowSize = 1; %Vary this
+bestWindowIncrement = 1;
 
+windowSizes = 25;
 
-slidingWindowModel = getSlidingWindowAverageModel(trainData);
+fileContents = importdata('Pattern55.xlsx');
+trainData = fileContents.data;
 
-%Run through all the test data
+for windowSize  = 1 :windowSizes
+    slidingWindowModel = getSlidingWindowAverageModel(trainData,windowSize, bestWindowIncrement);
+    slidingWindowModel.windowSize = windowSize;
+    slidingWindowModel.windowIncrement = bestWindowIncrement;
+    %Run through all the test data
+    
+    
+    %Vary or tune model parameters
+    
+    %Calculate accuracy based on the model
+    slidingWindowPredictions = getSlidingWindowAveragePredictions(trainData,slidingWindowModel);
+    
+    % A scalar accuracy score
+    slidingWindowAccuracy = getAccuracyScore(slidingWindowPredictions, trainData);
+    
+    %Record accuracy
+    if(slidingWindowAccuracy > bestSlidingWindowAccuracy)
+        bestSlidingWindowAccuracy = slidingWindowAccuracy;
+        bestWindowSize = windowSize;
+    end
+    
+end
 
-
-%Vary or tune model parameters
-
-%Calculate accuracy based on the model
-slidingWindowPredictions = getSlidingWindowAverageModelPredictions(testData);
-
-%Record accuracy
-
+bestSlidingWindowAccuracy
+bestWindowSize
 %Plot the parameters vs accuracy curve
+
 
 %Select the best model parameters based on accuracy
 
