@@ -26,12 +26,12 @@ bestSlidingWindowAccuracy = 0;
 bestWindowSize = 1; %Vary this
 bestWindowIncrement = 1;
 
-windowSizes = 25;
+windowSizes = 50;
 
-fileContents = importdata('Pattern55.xlsx');
+fileContents = importdata('Pattern61.xlsx');
 trainData = fileContents.data;
 
-for windowSize  = 1 :windowSizes
+for windowSize  = 6 :windowSizes
     slidingWindowModel = getSlidingWindowAverageModel(trainData,windowSize, bestWindowIncrement);
     slidingWindowModel.windowSize = windowSize;
     slidingWindowModel.windowIncrement = bestWindowIncrement;
@@ -54,7 +54,7 @@ for windowSize  = 1 :windowSizes
     
 end
 
-bestSlidingWindowAccuracy
+bestSlidingWindowAccuracy 
 bestWindowSize
 %Plot the parameters vs accuracy curve
 
