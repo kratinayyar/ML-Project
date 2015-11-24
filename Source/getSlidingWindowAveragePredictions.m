@@ -21,7 +21,7 @@ for slidingWindowDataIndex = 1 : windowIncrement : n - windowSize
     if(currentAverage - globalAverage >= threshold)
         predictions(slidingWindowDataIndex) = 1;
     else
-        currentAverage = mean(slidingWindowData(:,1) == 0);
+        currentAverage = mean(slidingWindowData(slidingWindowData(:,2) == 0));
         globalAverage = currentAverage;
     end
     
