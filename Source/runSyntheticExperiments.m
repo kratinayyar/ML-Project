@@ -40,7 +40,6 @@ trainData = fileContents.data;
 % fileContents = importdata('combinedData.csv');
 % trainData = fileContents(1:3000,2:3);
 
-
 plotData = zeros(windowSizes,2);
 
 for windowSize  = 1 :windowSizes
@@ -70,7 +69,9 @@ end
 %Plot the parameters vs accuracy curve
 plot(plotData(:,1),plotData(:,2));
 
+
 %Select the best model parameters based on accuracy
+
 bestSlidingWindowAccuracy 
 bestWindowSize
 
