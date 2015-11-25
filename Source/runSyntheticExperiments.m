@@ -40,7 +40,6 @@ trainData = fileContents.data;
 % fileContents = importdata('combinedData.csv');
 % trainData = fileContents(1:3000,2:3);
 
-
 plotData = zeros(windowSizes,2);
 
 for windowSize  = 1 :windowSizes
@@ -68,6 +67,7 @@ for windowSize  = 1 :windowSizes
 end
 
 plot(plotData(:,1),plotData(:,2));
+
 
 bestSlidingWindowAccuracy 
 bestWindowSize

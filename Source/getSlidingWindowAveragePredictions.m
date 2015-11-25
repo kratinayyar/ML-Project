@@ -13,7 +13,7 @@ for slidingWindowDataIndex = 1 : windowIncrement : n - windowSize
     slidingWindowData = trainData(slidingWindowDataIndex:slidingWindowDataIndex + windowSize,:);
     %Average the value in a variable
     %Calculate the new average
-    currentAverage = mean(slidingWindowData(:,1));
+    currentAverage = mean(slidingWindowData(slidingWindowData(:,2) == 0));
     %if the currentAverage - globalAverage > threshold, it is an anomaly
     if(globalAverage == 0)
         globalAverage = currentAverage;
