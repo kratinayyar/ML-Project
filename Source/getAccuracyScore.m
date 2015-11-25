@@ -1,5 +1,11 @@
 function accuracyScore = getAccuracyScore(predictions, data)
 
-n = length(data(:,1));
-matches = sum(predictions(:) == data(:,2));
-accuracyScore = (matches/n) * 100;
+alpha = 1;
+postiveDataIndexes = find(data(:,2) == 1);
+truePositives = sum(predictions(postiveDataIndexes)) + alpha;
+totalPositives = sum(predictions  == 1) + alpha;
+precision = truePositives/totalPositives;
+expectedPositives = length(postiveDataIndexes) + alpha;
+recall = truePositives/expectedPositives;
+
+accuracyScore = 2 * precision * recall/(precision + recall);
