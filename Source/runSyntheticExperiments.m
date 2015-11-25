@@ -26,13 +26,20 @@ bestSlidingWindowAccuracy = 0;
 bestWindowSize = 1; %Vary this
 bestWindowIncrement = 1;
 
+
 windowSizes = 50;
+
 
 %fileContents = importdata('Pattern61.xlsx');
 %trainData = fileContents.data;
 
+
 fileContents = importdata('real_6.csv');
 trainData = fileContents.data;
+
+% fileContents = importdata('combinedData.csv');
+% trainData = fileContents(1:3000,2:3);
+
 
 plotData = zeros(windowSizes,2);
 
