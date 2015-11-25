@@ -12,7 +12,7 @@ for i = 1 : windowSize
 end
 
 globalAverage = 0;
-for slidingWindowDataIndex = 6 : windowIncrement : n - windowSize + 1
+for slidingWindowDataIndex = 1 : windowIncrement : n - windowSize + 1
     %Pick the windowSize worth of data
     slidingWindowData = trainData(slidingWindowDataIndex:slidingWindowDataIndex + windowSize - 1,:);
     %Average the value in a variable

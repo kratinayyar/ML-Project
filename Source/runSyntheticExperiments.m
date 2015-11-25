@@ -66,15 +66,14 @@ for windowSize  = 1 :windowSizes
     plotData(windowSize,2) = slidingWindowAccuracy;
 end
 
+%Plot the parameters vs accuracy curve
 plot(plotData(:,1),plotData(:,2));
 
 
+%Select the best model parameters based on accuracy
+
 bestSlidingWindowAccuracy 
 bestWindowSize
-%Plot the parameters vs accuracy curve
-
-
-%Select the best model parameters based on accuracy
 
 %% Run the FFT based algorithm
 fftModel = getFFTModel(trainData);
