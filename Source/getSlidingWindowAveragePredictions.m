@@ -1,6 +1,7 @@
 function predictions = getSlidingWindowAveragePredictions(trainData, model)
 
 threshold = model.threshold;
+multiplier = model.multiplier;
 n = length(trainData(:,1));
 windowIncrement = model.windowIncrement;
 windowSize = model.windowSize;
@@ -18,7 +19,7 @@ for slidingWindowDataIndex = 1 : windowIncrement : n - windowSize
         globalAverage = currentAverage;
     end
     
-    if(currentAverage - globalAverage >= threshold)
+    if(currentAverage - globalAverage >= currentAverage * multiplier)
         predictions(slidingWindowDataIndex) = 1;
     else
         currentAverage = mean(slidingWindowData(slidingWindowData(:,2) == 0));
