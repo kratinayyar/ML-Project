@@ -34,7 +34,7 @@ windowSizes = 50;
 %trainData = fileContents.data;
 
 
-fileContents = importdata('real_6.csv');
+fileContents = importdata('Pattern61.csv');
 trainData = fileContents.data;
 
 % fileContents = importdata('combinedData.csv');
