@@ -26,13 +26,22 @@ bestSlidingWindowAccuracy = 0;
 bestWindowSize = 1; %Vary this
 bestWindowIncrement = 1;
 
-windowSizes = 5;
+
+windowSizes = 50;
+
 
 %fileContents = importdata('Pattern61.xlsx');
 %trainData = fileContents.data;
 
-fileContents = importdata('combinedData.csv');
-trainData = fileContents(1:3000,2:3);
+
+fileContents = importdata('real_6.csv');
+trainData = fileContents.data;
+
+% fileContents = importdata('combinedData.csv');
+% trainData = fileContents(1:3000,2:3);
+
+
+plotData = zeros(windowSizes,2);
 
 for windowSize  = 1 :windowSizes
     slidingWindowModel = getSlidingWindowAverageModel(trainData,windowSize, bestWindowIncrement);
@@ -54,8 +63,11 @@ for windowSize  = 1 :windowSizes
         bestSlidingWindowAccuracy = slidingWindowAccuracy;
         bestWindowSize = windowSize;
     end
-    
+    plotData(windowSize,1) = windowSize;
+    plotData(windowSize,2) = slidingWindowAccuracy;
 end
+
+plot(plotData(:,1),plotData(:,2));
 
 bestSlidingWindowAccuracy 
 bestWindowSize
