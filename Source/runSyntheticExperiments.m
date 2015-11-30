@@ -6,7 +6,7 @@ trainData = zeros(1000, 2);
 testData = zeros(1,1);
 
 %% Run the threshold based algorithm
-thresholdModel = getThresholdWorkflowModel(trainData); 
+%thresholdModel = getThresholdWorkflowModel(trainData); 
 
 %Run through all the test data
 
@@ -25,8 +25,9 @@ thresholdModel = getThresholdWorkflowModel(trainData);
 bestSlidingWindowAccuracy = 0;
 bestWindowSize = 1; %Vary this
 bestWindowIncrement = 1;
-
-
+bestNormalizingRatio = 1;
+normalizingRatiosStartPoint = 0.9;
+normalizingRatiosEndPoint = 1.4;
 windowSizes = 50;
 
 
@@ -41,8 +42,9 @@ trainData = fileContents.data;
 % trainData = fileContents(1:3000,2:3);
 
 plotData = zeros(windowSizes,2);
+bestMultipliers = zeros(windowSizes,1);
 
-for windowSize  = 1 :windowSizes
+for windowSize  = 1 : windowSizes
     slidingWindowModel = getSlidingWindowAverageModel(trainData,windowSize, bestWindowIncrement);
     slidingWindowModel.windowSize = windowSize;
     slidingWindowModel.windowIncrement = bestWindowIncrement;
@@ -52,18 +54,31 @@ for windowSize  = 1 :windowSizes
     %Vary or tune model parameters
     
     %Calculate accuracy based on the model
-    slidingWindowPredictions = getSlidingWindowAveragePredictions(trainData,slidingWindowModel);
+    multiplier = slidingWindowModel.multiplier;
+    bestLocalAccuracy = 0;
+    %for localMultiplier = 1: 1
+    for localMultiplier = normalizingRatiosStartPoint: 0.1:normalizingRatiosEndPoint
+        slidingWindowModel.multiplier = multiplier * localMultiplier;
+        slidingWindowPredictions = getSlidingWindowAveragePredictions(trainData,slidingWindowModel);
+        % A scalar accuracy score
+        slidingWindowAccuracy = getAccuracyScore(slidingWindowPredictions, trainData);
+        if(isnan(slidingWindowAccuracy))
+            slidingWindowAccuracy = 0;
+        end
+        if(slidingWindowAccuracy > bestLocalAccuracy)
+            bestLocalAccuracy = slidingWindowAccuracy;
+            bestMultipliers(windowSize) = localMultiplier;
+        end
+    end
     
-    % A scalar accuracy score
-    slidingWindowAccuracy = getAccuracyScore(slidingWindowPredictions, trainData);
     
     %Record accuracy
-    if(slidingWindowAccuracy > bestSlidingWindowAccuracy)
-        bestSlidingWindowAccuracy = slidingWindowAccuracy;
+    if(bestLocalAccuracy > bestSlidingWindowAccuracy)
+        bestSlidingWindowAccuracy = bestLocalAccuracy;
         bestWindowSize = windowSize;
     end
     plotData(windowSize,1) = windowSize;
-    plotData(windowSize,2) = slidingWindowAccuracy;
+    plotData(windowSize,2) = bestLocalAccuracy;
 end
 
 %Plot the parameters vs accuracy curve
