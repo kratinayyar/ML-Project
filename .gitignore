@@ -17,3 +17,5 @@ slprj/
 
 #No xslx
 *.xls*
+
+*.csv*
