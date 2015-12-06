@@ -18,20 +18,20 @@ for slidingWindowDataIndex = 1 : windowIncrement : n - windowSize + 1
     %Average the value in a variable
     %Calculate the new weighted average
     slidingWindowData(:,1) = slidingWindowData(:,1);% .* weightVector;
-    currentAverage = mean(slidingWindowData(slidingWindowData(:,2) == 0));
+    currentAverage = mean(slidingWindowData(:,1));
+    sigma = var(slidingWindowData(:,1));
     
     %if the currentPoint is an anomaly, set threshold to
     %abs(newAverage - oldAverage) if the difference is less
     %than the threshold.
     if(slidingWindowData(windowSize,2) == 1)
-        %currentDistribution = normcdf(slidingWindowData(slidingWindowData(:,2) == 0),currenAverage,sigma);
-        localThreshold =  currentAverage - globalAverage;
+        localThreshold =  abs(currentAverage - globalAverage);
         if(localThreshold <= threshold)
             threshold = localThreshold;
-            multiplier = abs(localThreshold/currentAverage);
+            multiplier = abs(localThreshold/sigma);
         end
     else
-        currentAverage = mean(slidingWindowData(slidingWindowData(:,2) == 0));
+        currentAverage = mean(slidingWindowData(:,1));
         %if(currentAverage ~= 0)
             globalAverage = currentAverage;
         %end
@@ -39,5 +39,5 @@ for slidingWindowDataIndex = 1 : windowIncrement : n - windowSize + 1
     
 end
 
-model.threshold = threshold;
+%model.threshold = threshold;
 model.multiplier = multiplier;

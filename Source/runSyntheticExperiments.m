@@ -34,15 +34,16 @@ windowSizes = 50;
 %trainData = fileContents.data;
 
 
-fileContents = importdata('Pattern61.csv');
-trainData = fileContents.data;
+% fileContents = importdata('Pattern55.csv');
+% trainData = fileContents.data;
+trainData = Anomaly(350:960,:);
 
 % fileContents = importdata('combinedData.csv');
 % trainData = fileContents(1:3000,2:3);
 
 plotData = zeros(windowSizes,2);
 
-for windowSize  = 1 :windowSizes
+for windowSize  = 2 :windowSizes
     slidingWindowModel = getSlidingWindowAverageModel(trainData,windowSize, bestWindowIncrement);
     slidingWindowModel.windowSize = windowSize;
     slidingWindowModel.windowIncrement = bestWindowIncrement;
