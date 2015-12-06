@@ -1,12 +1,12 @@
 %First comment
-clear;
+%clear;
 
 %Just a place holder for the training data
 trainData = zeros(1000, 2);
 testData = zeros(1,1);
 
 %% Run the threshold based algorithm
-thresholdModel = getThresholdWorkflowModel(trainData); 
+%thresholdModel = getThresholdWorkflowModel(trainData); 
 
 %Run through all the test data
 
@@ -43,7 +43,7 @@ trainData = Anomaly(350:960,:);
 
 plotData = zeros(windowSizes,2);
 
-for windowSize  = 2 :windowSizes
+for windowSize  = 7 :windowSizes
     slidingWindowModel = getSlidingWindowAverageModel(trainData,windowSize, bestWindowIncrement);
     slidingWindowModel.windowSize = windowSize;
     slidingWindowModel.windowIncrement = bestWindowIncrement;
